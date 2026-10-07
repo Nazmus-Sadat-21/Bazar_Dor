@@ -52,7 +52,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <>
       <Link href="/">
-        <div className="cursor-pointer bg-white rounded-2xl p-4 border border-gray-200 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
+        <div className="cursor-pointer bg-white rounded-2xl p-4 border border-gray-200 shadow-xs hover:shadow-md hover:border-emerald-600 transition-shadow flex flex-col justify-between">
           {/* Top Header Section */}
 
           <div className="flex items-center gap-3">

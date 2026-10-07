@@ -30,12 +30,12 @@ const Products = async () => {
   // 1. Filter and sort highest price rise first (pct descending)
   const priceIncreased = data
     .filter((e) => e.change?.dir === "up")
-    .sort((a, b) => (b.change?.pct || 0) - (a.change?.pct || 0)).slice(0,10);
+    .sort((a, b) => (b.change?.pct || 0) - (a.change?.pct || 0)).slice(0,6);
 
   // 2. Filter and sort highest price drop first (pct descending)
   const priceDecreased = data
     .filter((e) => e.change?.dir === "down")
-    .sort((a, b) => (b.change?.pct || 0) - (a.change?.pct || 0)).slice(0,10);
+    .sort((a, b) => (a.change?.pct || 0) - (b.change?.pct || 0)).slice(0,6);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
