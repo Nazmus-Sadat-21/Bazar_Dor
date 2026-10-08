@@ -39,6 +39,17 @@ export default function SignUpPage() {
     }
   };
 
+   const handleGithub = async () => {
+      try {
+        await signIn.social({
+          provider: "github",
+          callbackURL: "/", // Redirect path after successful Google authentication
+        });
+      } catch (error) {
+        console.error("GitHub sign-in failed:", error);
+      }
+    };
+
   return (
     <div className="min-h-screen bg-[#f5f7f6] flex flex-col justify-center items-center px-4 py-12">
       {/* Header */}
@@ -156,6 +167,7 @@ export default function SignUpPage() {
 
           {/* GitHub Button */}
           <button
+          onClick={handleGithub}
             type="button"
             className="cursor-pointer flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold text-xs py-2.5 px-3 rounded-xl transition-all"
           >
