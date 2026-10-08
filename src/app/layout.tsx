@@ -5,8 +5,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import MenuPage from "@/components/shared/Menu";
 import { ToastContainer } from "react-toastify";
-
-
+import Marquee from "@/components/shared/Marquee";
 
 const geistSans = Noto_Serif_Bengali({
   subsets: ["latin", "bengali"],
@@ -27,7 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-[#f5f7f6] ">
         <Navbar></Navbar>
         <MenuPage></MenuPage>
-        
+        <Marquee></Marquee>
 
         <main>{children}</main>
         <Footer></Footer>

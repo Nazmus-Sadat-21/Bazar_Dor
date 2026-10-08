@@ -15,6 +15,7 @@ export default function Navbar() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const handaleSignout = async()=>{
+    setIsProfileOpen(false)
     await signOut();
     redirect("/")
   }
@@ -54,7 +55,7 @@ export default function Navbar() {
               alt={session?.user.name || "Profile"}
               height={8}
               width={8}
-              className="w-12 h-12 rounded-full object-cover border border-gray-200"
+              className="w-10 h-10 rounded-full object-cover border border-gray-200"
             />
           ) : (
             <div className="w-10 h-10 rounded-full bg-[#008a4c] text-white flex items-center justify-center font-bold text-lg uppercase">
@@ -127,6 +128,7 @@ export default function Navbar() {
             {/* Sign Out */}
             <button
               type="button"
+              
               onClick={handaleSignout}
               className="cursor-pointer w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 transition-colors font-medium"
             >
