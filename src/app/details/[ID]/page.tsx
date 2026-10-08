@@ -64,7 +64,7 @@ const page = async ({ params }: PageProps) => {
 
   try {
     const response = await fetch(
-      `https://api.api-store.workers.dev/api/bazardor/products/${ID}`,
+      `https://api.abcz.workers.dev/api/bazardor/products/${ID}`,
       { next: { revalidate: 3600 } }
     );
     if (response.ok) {
