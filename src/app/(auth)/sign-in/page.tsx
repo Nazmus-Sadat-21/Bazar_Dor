@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import Link from "next/link";
 import { signIn } from "@/lib/auth-client";
@@ -6,28 +6,38 @@ import { toast } from "react-toastify";
 import { redirect } from "next/navigation";
 
 export default function SignInPage() {
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const formdata = new FormData(e.currentTarget);
-      const user = Object.fromEntries(formdata.entries()) as {
-        email: string;
-        password: string;
-      };
-  
-      const { data, error } = await signIn.email({
-        ...user,
-      });
-  
-      if (data) {
-        toast.success("LogIn Successfully");
-        redirect("/");
-      }
-      if (error) {
-        toast.error(error.message);
-      }
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formdata = new FormData(e.currentTarget);
+    const user = Object.fromEntries(formdata.entries()) as {
+      email: string;
+      password: string;
     };
-  
+
+    const { data, error } = await signIn.email({
+      ...user,
+    });
+
+    if (data) {
+      toast.success("LogIn Successfully");
+      redirect("/");
+    }
+    if (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const handleGoogle = async () => {
+    try {
+      await signIn.social({
+        provider: "google",
+        callbackURL: "/", // Redirect path after successful Google authentication
+      });
+    } catch (error) {
+      console.error("Google sign-in failed:", error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#f5f7f6] flex flex-col justify-center items-center px-4 py-12">
       {/* Header */}
@@ -49,7 +59,7 @@ export default function SignInPage() {
               ইমেইল
             </label>
             <input
-            name="email"
+              name="email"
               type="email"
               placeholder="you@example.com"
               className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:border-[#008a4c] focus:ring-1 focus:ring-[#008a4c] transition-all"
@@ -63,7 +73,7 @@ export default function SignInPage() {
               পাসওয়ার্ড
             </label>
             <input
-            name="password"
+              name="password"
               type="password"
               placeholder="কমপক্ষে ৮ অক্ষর"
               className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:border-[#008a4c] focus:ring-1 focus:ring-[#008a4c] transition-all"
@@ -92,6 +102,7 @@ export default function SignInPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {/* Google Button */}
           <button
+            onClick={handleGoogle}
             type="button"
             className="cursor-pointer flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold text-xs py-2.5 px-3 rounded-xl transition-all"
           >

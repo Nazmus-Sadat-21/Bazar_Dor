@@ -1,12 +1,11 @@
-"use client"
-import { signUp } from "@/lib/auth-client";
+"use client";
+import { signIn, signUp } from "@/lib/auth-client";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 import { toast } from "react-toastify";
 
 export default function SignUpPage() {
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formdata = new FormData(e.currentTarget);
@@ -26,6 +25,17 @@ export default function SignUpPage() {
     }
     if (error) {
       toast.error(error.message);
+    }
+  };
+
+  const handleGoogle = async () => {
+    try {
+      await signIn.social({
+        provider: "google",
+        callbackURL: "/", // Redirect path after successful Google authentication
+      });
+    } catch (error) {
+      console.error("Google sign-in failed:", error);
     }
   };
 
@@ -119,6 +129,7 @@ export default function SignUpPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {/* Google Button */}
           <button
+            onClick={handleGoogle}
             type="button"
             className="cursor-pointer flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold text-xs py-2.5 px-3 rounded-xl transition-all"
           >
