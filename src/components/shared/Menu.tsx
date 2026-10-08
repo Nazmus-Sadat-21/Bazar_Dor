@@ -11,7 +11,7 @@ const getMenuData = async (): Promise<Category[]> => {
   try {
     const res = await fetch(
       "https://api.api-store.workers.dev/api/bazardor/categories",
-      { next: { revalidate: 3600 } },
+      
     );
     if (!res.ok) return [];
     return await res.json();
@@ -33,7 +33,7 @@ const MenuPage = async () => {
           {data.map((e) => (
             <Link
               key={e.id}
-              href={`/Category/${e.slug}`}
+              href={`/Category/${e.id}`}
               className="flex items-center gap-1 text-sm sm:text-base font-medium text-gray-800 hover:text-[#008a4c] transition-colors shrink-0 py-1"
             >
               {e.icon && <span className="text-base sm:text-lg">{e.icon}</span>}

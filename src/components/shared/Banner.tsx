@@ -4,9 +4,9 @@ import Link from "next/link";
 export default function Banner() {
   //   const [bengaliDate, setBengaliDate] = useState<string>("");
 
-  const date = new Date().toLocaleDateString("bn-BD", {
-    dateStyle: "full",
-  });
+  // const date = new Date().toLocaleDateString("bn-BD", {
+  //   dateStyle: "full",
+  // });
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6">
@@ -15,7 +15,7 @@ export default function Banner() {
         <div className="flex-1 space-y-4 text-left">
           {/* Top Green Date Badge */}
           <div className="inline-block bg-[#b7f3d8] text-[#187048] text-xs border-2 border-emerald-600 sm:text-sm font-semibold px-4 py-1.5 rounded-full shadow-xs">
-            {date}
+            {/* {date} */}
           </div>
 
           {/* Main Heading */}

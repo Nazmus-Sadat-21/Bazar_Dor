@@ -3,16 +3,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ShoppingCart, Menu, X } from "lucide-react";
-import MenuPage from "./Menu";
+// import MenuPage from "./Menu";
 
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 
-  const date = new Date().toLocaleDateString("bn-BD",{
-    dateStyle : "full"
-  })
+  // const date = new Date().toLocaleDateString("bn-BD",{
+  //   dateStyle : "full"
+  // })
 
   return (
     <>
@@ -33,7 +33,7 @@ export default function Navbar() {
                 বাজার দর
               </span>
               <span className="text-xs text-gray-500 font-medium mt-0.5">
-                {date}
+                {/* {date} */}
               </span>
             </div>
           </Link>
@@ -93,7 +93,7 @@ export default function Navbar() {
       )}
       
     </header>
-   <MenuPage></MenuPage>
+   {/* <MenuPage></MenuPage> */}
 </>
     
   );
