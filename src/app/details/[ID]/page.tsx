@@ -123,11 +123,11 @@ const page = async ({ params }: PageProps) => {
               {data.nameBn}
             </h1>
             <p className="text-xs sm:text-sm text-gray-400 font-medium mt-1">
-              প্রতি {getUnitBn(data.unit)} • {data.categoryNameBn || "চাল"}
+              প্রতি {getUnitBn(data.unit)} • {data.categoryNameBn}
             </p>
             <p className="text-sm text-gray-600 mt-2 font-medium">
               গতকালকের তুলনায় আজ দাম{" "}
-              <span className={isUp ? "font-bold text-gray-900" : isDown ? "font-bold text-emerald-600" : "font-bold text-gray-700"}>
+              <span className={isUp ? "font-bold text-red-500" : isDown ? "font-bold text-emerald-600" : "font-bold text-gray-700"}>
                 {isUp ? "বেড়েছে" : isDown ? "কমেছে" : "পরিবর্তন হয়নি"}
               </span>
               {diffAmount > 0 && ` • ${toBn(diffAmount)} টাকা`}

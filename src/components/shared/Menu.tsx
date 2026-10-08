@@ -23,6 +23,7 @@ const getMenuData = async (): Promise<Category[]> => {
 
 const MenuPage = async () => {
   const data = await getMenuData();
+ 
 
   return (
     <nav className="w-full border-b border-gray-100 bg-white">
@@ -34,7 +35,7 @@ const MenuPage = async () => {
             <Link
               key={e.id}
               href={`/Category/${e.id}`}
-              className="flex items-center gap-1 text-sm sm:text-base font-medium text-gray-800 hover:text-[#008a4c] transition-colors shrink-0 py-1"
+              className="flex items-center gap-1 text-sm focus:text-[#008a4c]  focus:text-2xl sm:text-base font-medium text-gray-800 hover:text-[#008a4c] transition-colors shrink-0 py-1"
             >
               {e.icon && <span className="text-base sm:text-lg">{e.icon}</span>}
               <span>{e.nameBn}</span>
@@ -46,4 +47,4 @@ const MenuPage = async () => {
   );
 };
 
-export default MenuPage;
+export default MenuPage

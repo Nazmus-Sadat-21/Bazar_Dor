@@ -10,9 +10,9 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 
-  // const date = new Date().toLocaleDateString("bn-BD",{
-  //   dateStyle : "full"
-  // })
+  const date = new Date().toLocaleDateString("bn-BD",{
+    dateStyle : "full"
+  })
 
   return (
     <>
@@ -33,7 +33,7 @@ export default function Navbar() {
                 বাজার দর
               </span>
               <span className="text-xs text-gray-500 font-medium mt-0.5">
-                {/* {date} */}
+                {date}
               </span>
             </div>
           </Link>
@@ -41,13 +41,13 @@ export default function Navbar() {
           {/* Desktop Right Actions */}
           <div className="hidden md:flex items-center gap-6">
             <Link
-              href="/signin"
+              href="/sign-in"
               className="text-gray-800 hover:text-[#008a4c] font-semibold text-base transition-colors px-2 py-1"
             >
               সাইন ইন
             </Link>
             <Link
-              href="/signup"
+              href="/sign-up"
               className="bg-[#008a4c] hover:bg-[#007540] text-white font-semibold text-base px-6 py-2.5 rounded-lg shadow-sm transition-all hover:shadow-md active:scale-95"
             >
               সাইন আপ
@@ -76,14 +76,14 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <div className="md:hidden border-t border-gray-100 bg-white px-4 pt-4 pb-6 space-y-3 shadow-lg">
           <Link
-            href="/signin"
+            href="/sign-in"
             onClick={() => setIsMobileMenuOpen(false)}
             className="block text-center w-full py-2.5 text-gray-800 font-semibold rounded-lg hover:bg-gray-50 border border-gray-200"
           >
             সাইন ইন
           </Link>
           <Link
-            href="/signup"
+            href="/sign-up"
             onClick={() => setIsMobileMenuOpen(false)}
             className="block text-center w-full py-2.5 bg-[#008a4c] text-white font-semibold rounded-lg hover:bg-[#007540] transition-colors"
           >

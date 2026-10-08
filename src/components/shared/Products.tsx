@@ -1,14 +1,12 @@
-// 
-
-import React from "react";
+import ProductPage from "@/app/products/page";
 import ProductCard, { Product } from "../Cards/ProductCard";
 
-// Helper to convert numbers to Bengali
-const toBn = (num: number | string): string => {
-  return num
-    .toString()
-    .replace(/\d/g, (digit) => "০১২৩৪৫৬৭৮৯"[parseInt(digit, 10)]);
-};
+// // Helper to convert numbers to Bengali
+// const toBn = (num: number | string): string => {
+//   return num
+//     .toString()
+//     .replace(/\d/g, (digit) => "০১২৩৪৫৬৭৮৯"[parseInt(digit, 10)]);
+// };
 
 const getProductData = async (): Promise<Product[]> => {
   try {
@@ -69,7 +67,7 @@ const Products = async () => {
       )}
 
       {/* 3. All Products */}
-      <section className="space-y-4">
+      {/* <section className="space-y-4">
         <div>
           <h2 className="text-xl font-bold text-gray-900">সব পণ্য</h2>
           <p className="text-xs text-gray-500 mt-1 font-medium">
@@ -81,7 +79,9 @@ const Products = async () => {
             <ProductCard key={x.id} product={x} />
           ))}
         </div>
-      </section>
+      </section> */}
+
+    <ProductPage></ProductPage>
 
     </div>
   );
