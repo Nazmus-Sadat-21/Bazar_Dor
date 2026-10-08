@@ -1,7 +1,34 @@
-import React from "react";
+"use client"
+import { signUp } from "@/lib/auth-client";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import React from "react";
+import { toast } from "react-toastify";
 
 export default function SignUpPage() {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formdata = new FormData(e.currentTarget);
+    const user = Object.fromEntries(formdata.entries()) as {
+      name: string;
+      email: string;
+      password: string;
+    };
+
+    const { data, error } = await signUp.email({
+      ...user,
+    });
+
+    if (data) {
+      toast.success("Account Created Successfully");
+      redirect("/");
+    }
+    if (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#f5f7f6] flex flex-col justify-center items-center px-4 py-12">
       {/* Header */}
@@ -16,14 +43,13 @@ export default function SignUpPage() {
 
       {/* Form Card */}
       <div className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-xs space-y-5">
-        <form className="space-y-4" >
+        <form className="space-y-4" onSubmit={handleSubmit}>
           {/* Name Field */}
           <div className="space-y-1.5 text-left">
-            <label className="block text-sm font-bold text-gray-800">
-              নাম
-            </label>
+            <label className="block text-sm font-bold text-gray-800">নাম</label>
             <input
               type="text"
+              name="name"
               placeholder="যেমন: রহিম উদ্দীন"
               className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:border-[#008a4c] focus:ring-1 focus:ring-[#008a4c] transition-all"
               required
@@ -36,6 +62,7 @@ export default function SignUpPage() {
               ইমেইল
             </label>
             <input
+              name="email"
               type="email"
               placeholder="you@example.com"
               className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:border-[#008a4c] focus:ring-1 focus:ring-[#008a4c] transition-all"
@@ -49,6 +76,7 @@ export default function SignUpPage() {
               পাসওয়ার্ড
             </label>
             <input
+              name="password"
               type="password"
               placeholder="কমপক্ষে ৮ অক্ষর"
               className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:border-[#008a4c] focus:ring-1 focus:ring-[#008a4c] transition-all"
@@ -62,6 +90,7 @@ export default function SignUpPage() {
               পাসওয়ার্ড নিশ্চিত করুন
             </label>
             <input
+              name="re-password"
               type="password"
               placeholder="আবার লিখুন"
               className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:border-[#008a4c] focus:ring-1 focus:ring-[#008a4c] transition-all"

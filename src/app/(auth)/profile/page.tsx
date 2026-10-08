@@ -86,7 +86,7 @@ export default function ProfilePage() {
               </label>
                <input
                 id="img"
-                type="text"
+                type="url"
                 // value={name}
                 // onChange={(e) => setName(e.target.value)}
                 placeholder="ইমেজ url"
