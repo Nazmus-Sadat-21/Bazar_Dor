@@ -47,7 +47,7 @@ export default function CategoryProductList({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
       <p className="flex gap-2 text-gray-600">
-        <Link href="/">হোম</Link> →{" "}
+        <Link href="/">হোম</Link> {">"}{" "}
         <Link href={`/Category/${products[0].category}`}>
           {products[0].categoryNameBn}
         </Link>

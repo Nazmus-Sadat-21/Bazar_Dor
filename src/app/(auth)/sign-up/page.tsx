@@ -13,7 +13,11 @@ export default function SignUpPage() {
       name: string;
       email: string;
       password: string;
+      repassword: string;
     };
+    if (user.password != user.repassword) {
+      return toast.error("Please Check your password again!");
+    }
 
     const { data, error } = await signUp.email({
       ...user,
@@ -32,23 +36,23 @@ export default function SignUpPage() {
     try {
       await signIn.social({
         provider: "google",
-        callbackURL: "/", 
+        callbackURL: "/",
       });
     } catch (error) {
       console.error("Google sign-in failed:", error);
     }
   };
 
-   const handleGithub = async () => {
-      try {
-        await signIn.social({
-          provider: "github",
-          callbackURL: "/", // Redirect path after successful Google authentication
-        });
-      } catch (error) {
-        console.error("GitHub sign-in failed:", error);
-      }
-    };
+  const handleGithub = async () => {
+    try {
+      await signIn.social({
+        provider: "github",
+        callbackURL: "/", // Redirect path after successful Google authentication
+      });
+    } catch (error) {
+      console.error("GitHub sign-in failed:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#f5f7f6] flex flex-col justify-center items-center px-4 py-12">
@@ -111,7 +115,7 @@ export default function SignUpPage() {
               পাসওয়ার্ড নিশ্চিত করুন
             </label>
             <input
-              name="re-password"
+              name="repassword"
               type="password"
               placeholder="আবার লিখুন"
               className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:border-[#008a4c] focus:ring-1 focus:ring-[#008a4c] transition-all"
@@ -167,7 +171,7 @@ export default function SignUpPage() {
 
           {/* GitHub Button */}
           <button
-          onClick={handleGithub}
+            onClick={handleGithub}
             type="button"
             className="cursor-pointer flex items-center justify-center gap-2 border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold text-xs py-2.5 px-3 rounded-xl transition-all"
           >

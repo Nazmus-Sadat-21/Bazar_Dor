@@ -1,4 +1,5 @@
 import CategoryProductList from "@/components/Cards/CategoryProductList";
+import { notFound } from "next/navigation";
 
 
 interface PageProps {
@@ -12,8 +13,13 @@ const page = async ({ params }: PageProps) => {
     `https://api.api-store.workers.dev/api/bazardor/products?category=${CategoryID}`,
   );
   const data = await response.json();
+  
+  if(!data){
+    notFound()
+  }
 
   return (
+    
     <div>
       <CategoryProductList products={data} />
     </div>
