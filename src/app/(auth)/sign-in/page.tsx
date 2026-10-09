@@ -1,14 +1,13 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { signIn } from "@/lib/auth-client";
+import { signIn} from "@/lib/auth-client";
 import { toast } from "react-toastify";
-// import { redirect } from "next/navigation";
-
 import { useRouter } from "next/navigation";
 
 
 export default function SignInPage() {
+  // const {data:session} = useSession()
   const router = useRouter()
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,7 +22,7 @@ export default function SignInPage() {
     });
 
     if (data) {
-      toast.success("LogIn Successfully");
+      toast.success(`LogIn Successfully, Welcome ${data.user.name}`);
       // router.back()
       router.push("/")
     }
@@ -34,19 +33,21 @@ export default function SignInPage() {
 
   const handleGoogle = async () => {
     try {
-      await signIn.social({
+    await signIn.social({
         provider: "google",
-        callbackURL: "/", // Redirect path after successful Google authentication
+        callbackURL: "/", 
       });
-    } catch (error) {
+    } catch(error) {
       console.error("Google sign-in failed:", error);
     }
+    
   };
+
   const handleGithub = async () => {
     try {
       await signIn.social({
         provider: "github",
-        callbackURL: "/", // Redirect path after successful Google authentication
+        callbackURL: "/", 
       });
     } catch (error) {
       console.error("GitHub sign-in failed:", error);

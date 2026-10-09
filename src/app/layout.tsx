@@ -27,8 +27,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Navbar></Navbar>
         <MenuPage></MenuPage>
         <Marquee></Marquee>
-
-        <main>{children}</main>
+        <main>
+          {children}
+        </main>
         <Footer></Footer>
         <ToastContainer />
       </body>

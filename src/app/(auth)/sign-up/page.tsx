@@ -20,7 +20,7 @@ export default function SignUpPage() {
     });
 
     if (data) {
-      toast.success("Account Created Successfully");
+      toast.success(`Account Created Successfully, Welcome ${data.user.name}`);
       redirect("/");
     }
     if (error) {
@@ -32,7 +32,7 @@ export default function SignUpPage() {
     try {
       await signIn.social({
         provider: "google",
-        callbackURL: "/", // Redirect path after successful Google authentication
+        callbackURL: "/", 
       });
     } catch (error) {
       console.error("Google sign-in failed:", error);

@@ -58,8 +58,7 @@ const page = async ({ params }: PageProps) => {
 
   try {
     const response = await fetch(
-      `https://api.abcz.workers.dev/api/bazardor/products/${ID}`,
-      { next: { revalidate: 3600 } },
+      `https://api.api-store.workers.dev/api/bazardor/products/${ID}`,
     );
     if (response.ok) {
       data = await response.json();
@@ -76,39 +75,35 @@ const page = async ({ params }: PageProps) => {
     );
   }
 
-  const diffAmount = Math.abs((data.today) - (data.yesterday));
+  const diffAmount = Math.abs(data.today - data.yesterday);
   const isUp = data.change?.dir === "up";
   const isDown = data.change?.dir === "down";
-
 
   const markets = data?.markets ?? [];
   const allMins = markets.map((m) => m.min);
   const allMaxs = markets.map((m) => m.max);
 
-  const realMinPrice = Math.min(...allMins); 
+  const realMinPrice = Math.min(...allMins);
   const realMaxPrice = Math.max(...allMaxs);
   const realAvgPrice = Math.round(
     markets.length
-      ? markets.reduce((acc, m) => acc + (m.min + m.max) / 2, 0) / markets.length
-      : data.today
-  ); 
-
-
+      ? markets.reduce((acc, m) => acc + (m.min + m.max) / 2, 0) /
+          markets.length
+      : data.today,
+  );
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
       <p className=" flex gap-2 text-gray-600">
-        <Link href="/">হোম</Link> →{" "}
-        <Link href={`/Category/${data.category}`}>{data.categoryNameBn}</Link> →{" "}
-        <Link href={`/details/${data.id}`}>{data.nameBn}</Link>
+        <Link href="/">হোম</Link> {">"}{" "}
+        <Link href={`/Category/${data.category}`}>{data.categoryNameBn}</Link>{" "}
+        {">"} <Link href={`/details/${data.id}`}>{data.nameBn}</Link>
       </p>
 
-      {/* 1. Top Product Header Card */}
       <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
-        {/* Left Side: Icon, Title, Subtitle & Price Change Statement */}
         <div className="flex items-start gap-4">
           <div className="w-16 h-16 bg-red-50/80 rounded-2xl flex items-center justify-center text-3xl shrink-0">
-            {data.image || data.categoryIcon || "🍚"}
+            {data.image || data.categoryIcon}
           </div>
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">
@@ -135,7 +130,6 @@ const page = async ({ params }: PageProps) => {
           </div>
         </div>
 
-        {/* Right Side: Today's Price Badge */}
         <div className="bg-gray-50/80 border border-gray-100 rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center min-w-[150px] shrink-0">
           <span className="text-xs text-gray-500 font-medium">আজকের দাম</span>
           <span className="text-3xl sm:text-4xl font-extrabold text-gray-900 my-1">
@@ -161,14 +155,11 @@ const page = async ({ params }: PageProps) => {
         </div>
       </div>
 
-      {/* 2. Main Details Card (Summary & Market Table) */}
       <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-xs space-y-8">
-        {/* Section 1: Price Summary (দামের সারসংক্ষেপ) */}
         <div className="space-y-4">
           <h2 className="text-xl font-bold text-gray-900">দামের সারসংক্ষেপ</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {/* Minimum Price */}
             <div className="bg-gray-50/60 border border-gray-100 rounded-2xl p-5 space-y-1">
               <span className="text-xs text-gray-500 font-medium block">
                 সর্বনিম্ন দাম
@@ -194,7 +185,6 @@ const page = async ({ params }: PageProps) => {
               </span>
             </div>
 
-            {/* Average Price */}
             <div className="bg-gray-50/60 border border-gray-100 rounded-2xl p-5 space-y-1">
               <span className="text-xs text-gray-500 font-medium block">
                 গড় দাম

@@ -40,7 +40,7 @@ const getUnitBn = (unit: string): string => {
 
 const Marquee = async () => {
   const response = await fetch(
-    "https://api.abcz.workers.dev/api/bazardor/products",
+    "https://api.api-store.workers.dev/api/bazardor/products",
   );
 
   const data: ProductDetails[] = await response.json();
