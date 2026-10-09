@@ -47,7 +47,7 @@ const Marquee = async () => {
 
   return (
     <div className="w-full bg-white border-y border-gray-100 py-2.5 shadow-2xs overflow-hidden">
-      <MarqueeText direction="right" duration={30}>
+      <MarqueeText direction="right" duration={25}>
         <div className="flex items-center gap-2 pr-3">
           {data.map((e) => {
             const isUp = e.change?.dir === "up";

@@ -14,7 +14,7 @@ export default function Banner() {
         {/* Left Side Content */}
         <div className="flex-1 space-y-4 text-left">
           {/* Top Green Date Badge */}
-          <div className="inline-block bg-[#c7f2df] text-[#1c764d] text-xs  sm:text-sm font-semibold px-4 py-1.5 rounded-full shadow-xs">
+          <div className="inline-block bg-[#d1f1e3] text-[#2c8e62] text-xs  sm:text-sm font-semibold px-4 py-1.5 rounded-full shadow-xs">
             {date}
           </div>
 

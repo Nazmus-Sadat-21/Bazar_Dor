@@ -3,9 +3,13 @@ import React from "react";
 import Link from "next/link";
 import { signIn } from "@/lib/auth-client";
 import { toast } from "react-toastify";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
+
+import { useRouter } from "next/navigation";
+
 
 export default function SignInPage() {
+  const router = useRouter()
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formdata = new FormData(e.currentTarget);
@@ -20,7 +24,8 @@ export default function SignInPage() {
 
     if (data) {
       toast.success("LogIn Successfully");
-      redirect("/");
+      // router.back()
+      router.push("/")
     }
     if (error) {
       toast.error(error.message);
@@ -93,6 +98,7 @@ export default function SignInPage() {
 
           {/* Submit Button */}
           <button
+          
             type="submit"
             className="cursor-pointer w-full bg-[#008a4c] hover:bg-[#007540] text-white font-bold text-base py-2.5 rounded-xl transition-all shadow-xs active:scale-[0.98] mt-2"
           >

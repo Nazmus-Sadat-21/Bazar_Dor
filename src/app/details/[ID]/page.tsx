@@ -27,7 +27,6 @@ interface MarketData {
   division: string;
   min: number;
   max: number;
-  avg: number;
 }
 
 interface ProductDetails {
@@ -44,14 +43,7 @@ interface ProductDetails {
     dir: "up" | "down" | "none" | string;
     pct: number;
   };
-  minPrice?: number;
-  maxPrice?: number;
-  avgPrice?: number;
-  summary?: {
-    min: number;
-    max: number;
-    avg: number;
-  };
+
   markets?: MarketData[];
 }
 
@@ -84,30 +76,24 @@ const page = async ({ params }: PageProps) => {
     );
   }
 
-  // Calculate price direction & differences
-  const diffAmount = Math.abs((data.today || 0) - (data.yesterday || 0));
-  const isUp = data.change?.dir === "up" || data.today > data.yesterday;
-  const isDown = data.change?.dir === "down" || data.today < data.yesterday;
+  const diffAmount = Math.abs((data.today) - (data.yesterday));
+  const isUp = data.change?.dir === "up";
+  const isDown = data.change?.dir === "down";
 
-  // Summary Prices (min, max, avg) with fallback calculations if omitted by API
-  const minPrice =
-    data.summary?.min ?? data.minPrice ?? Math.round(data.today * 0.9);
-  const maxPrice =
-    data.summary?.max ?? data.maxPrice ?? Math.round(data.today * 1.1);
-  const avgPrice = data.summary?.avg ?? data.avgPrice ?? data.today;
 
-  // Market List with safe fallback if not provided by the endpoint
-  const marketsList: MarketData[] = data.markets?.length
-    ? data.markets
-    : [
-        {
-          market: "কারওয়ান বাজার",
-          division: "ঢাকা",
-          min: Math.round(avgPrice * 0.98),
-          max: Math.round(avgPrice * 1.08),
-          avg: avgPrice,
-        },
-      ];
+  const markets = data?.markets ?? [];
+  const allMins = markets.map((m) => m.min);
+  const allMaxs = markets.map((m) => m.max);
+
+  const realMinPrice = Math.min(...allMins); 
+  const realMaxPrice = Math.max(...allMaxs);
+  const realAvgPrice = Math.round(
+    markets.length
+      ? markets.reduce((acc, m) => acc + (m.min + m.max) / 2, 0) / markets.length
+      : data.today
+  ); 
+
+
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
@@ -188,7 +174,7 @@ const page = async ({ params }: PageProps) => {
                 সর্বনিম্ন দাম
               </span>
               <div className="text-2xl font-bold text-emerald-600">
-                {toBn(minPrice)} টাকা
+                {toBn(realMinPrice)} টাকা
               </div>
               <span className="text-xs text-gray-400 block font-medium">
                 সবচেয়ে কম দামের বাজার
@@ -201,7 +187,7 @@ const page = async ({ params }: PageProps) => {
                 সর্বাধিক দাম
               </span>
               <div className="text-2xl font-bold text-red-500">
-                {toBn(maxPrice)} টাকা
+                {toBn(realMaxPrice)} টাকা
               </div>
               <span className="text-xs text-gray-400 block font-medium">
                 সবচেয়ে বেশি দামের বাজার
@@ -214,7 +200,7 @@ const page = async ({ params }: PageProps) => {
                 গড় দাম
               </span>
               <div className="text-2xl font-bold text-emerald-600">
-                {toBn(avgPrice)} টাকা
+                {toBn(realAvgPrice)} টাকা
               </div>
               <span className="text-xs text-gray-400 block font-medium">
                 প্রতি {getUnitBn(data.unit)}-এর হিসাবে
@@ -223,7 +209,6 @@ const page = async ({ params }: PageProps) => {
           </div>
         </div>
 
-        {/* Section 2: Market-wise Prices (বাজারভিত্তিক আজকের দাম) */}
         <div className="space-y-4 pt-2">
           <h2 className="text-xl font-bold text-gray-900">
             বাজারভিত্তিক আজকের দাম
@@ -241,7 +226,7 @@ const page = async ({ params }: PageProps) => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 text-sm font-medium text-gray-800">
-                {marketsList.map((item, idx) => (
+                {data?.markets?.map((item, idx) => (
                   <tr
                     key={idx}
                     className="hover:bg-gray-50/50 transition-colors"

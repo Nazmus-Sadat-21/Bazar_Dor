@@ -46,9 +46,7 @@ export default function ProfilePage() {
 
   const Username = (
     <div className="w-16 h-16 rounded-2xl bg-[#008a4c] text-white flex items-center justify-center font-bold text-lg uppercase">
-      {session?.user?.name?.charAt(0) ||
-        session?.user?.email?.charAt(0) ||
-        "U"}
+      {session?.user?.name?.charAt(0)}
     </div>
   );
 
