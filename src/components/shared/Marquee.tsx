@@ -39,11 +39,18 @@ const getUnitBn = (unit: string): string => {
 };
 
 const Marquee = async () => {
-  const response = await fetch(
-    "https://api.api-store.workers.dev/api/bazardor/products",
-  );
+  let data: ProductDetails[] = [];
 
-  const data: ProductDetails[] = await response.json();
+  try {
+    const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products" , { next: { revalidate: 3600 } });
+    if (!res.ok) return [];
+    data = (await res.json()) as ProductDetails[];
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+
+  
 
   return (
     <div className="w-full bg-white border-y border-gray-100 py-2.5 shadow-2xs overflow-hidden">

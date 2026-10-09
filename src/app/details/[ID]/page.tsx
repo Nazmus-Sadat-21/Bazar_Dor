@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import React from "react";
 
 // Helper function to convert English digits to Bengali numerals
@@ -58,7 +59,7 @@ const page = async ({ params }: PageProps) => {
 
   try {
     const response = await fetch(
-      `https://api.api-store.workers.dev/api/bazardor/products/${ID}`,
+      `https://api.api-store.workers.dev/api/bazardor/products/${ID}`, { next: { revalidate: 3600 } }
     );
     if (response.ok) {
       data = await response.json();
@@ -68,11 +69,7 @@ const page = async ({ params }: PageProps) => {
   }
 
   if (!data) {
-    return (
-      <div className="max-w-7xl mx-auto px-4 py-12 text-center text-gray-500 font-medium">
-        পণ্য সম্পর্কিত কোনো তথ্য পাওয়া যায়নি।
-      </div>
-    );
+    notFound()
   }
 
   const diffAmount = Math.abs(data.today - data.yesterday);

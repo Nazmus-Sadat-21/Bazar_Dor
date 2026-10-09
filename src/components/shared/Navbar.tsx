@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -21,9 +21,19 @@ export default function Navbar() {
     router.push("/");
   };
 
-  const date = new Date().toLocaleDateString("bn-BD", {
-    dateStyle: "full",
-  });
+  const [date, setDate] = useState<string>("");
+
+  useEffect(() => {
+    setDate(
+      new Date().toLocaleDateString("bn-BD", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        timeZone: "Asia/Dhaka",
+      }),
+  );
+  }, []);
 
   return (
     <>
@@ -66,9 +76,7 @@ export default function Navbar() {
                       />
                     ) : (
                       <div className="w-10 h-10 rounded-full bg-[#008a4c] text-white flex items-center justify-center font-bold text-base uppercase shrink-0">
-                        {session.user.name?.charAt(0) ||
-                
-                          "U"}
+                        {session.user.name?.charAt(0) || "U"}
                       </div>
                     )}
 
@@ -192,7 +200,6 @@ export default function Navbar() {
                   ) : (
                     <div className="w-11 h-11 rounded-full bg-[#008a4c] text-white flex items-center justify-center font-bold text-base uppercase shrink-0">
                       {session.user.name?.charAt(0)}
-                        
                     </div>
                   )}
                   <div className="overflow-hidden">
