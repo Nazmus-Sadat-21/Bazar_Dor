@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import ProductCard, { Product } from "@/components/Cards/ProductCard";
 import { ChevronDown } from "lucide-react";
+import Link from "next/link";
 
 // Converts numbers to Bengali numerals
 const toBn = (num: number | string): string => {
@@ -42,9 +43,16 @@ export default function CategoryProductList({
   };
 
   const newSortedList = sortedList(products);
-  console.log(newSortedList);
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <p className="flex gap-2 text-gray-600">
+        <Link href="/">হোম</Link> →{" "}
+        <Link href={`/Category/${products[0].category}`}>
+          {products[0].categoryNameBn}
+        </Link>
+      </p>
+
       {/* 1. Category Header Card */}
       <div className="bg-white rounded-2xl p-6 border border-gray-100 flex items-center gap-4 shadow-xs">
         <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center text-3xl shrink-0">

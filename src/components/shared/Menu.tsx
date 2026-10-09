@@ -26,7 +26,7 @@ const MenuPage = async () => {
  
 
   return (
-    <nav className="w-full border-b border-gray-100 bg-white">
+    <nav className="sticky top-20 z-50 w-full border-b border-gray-100 bg-white ">
       {/* Same max-width and padding container as Navbar for aligned margins */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Left-aligned scrollable category row */}

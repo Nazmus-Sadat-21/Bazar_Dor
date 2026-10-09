@@ -7,7 +7,7 @@ import { signOut, useSession } from "@/lib/auth-client";
 
 import Image from "next/image";
 import { redirect } from "next/navigation";
-// import MenuPage from "./Menu";
+
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -229,7 +229,7 @@ export default function Navbar() {
           </div>
         )}
       </header>
-      {/* <MenuPage></MenuPage> */}
+      
     </>
   );
 }

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 // Helper function to convert English digits to Bengali numerals
@@ -32,6 +33,7 @@ interface MarketData {
 interface ProductDetails {
   id: number | string;
   nameBn: string;
+  category: string;
   categoryNameBn?: string;
   categoryIcon?: string;
   image?: string;
@@ -65,7 +67,7 @@ const page = async ({ params }: PageProps) => {
   try {
     const response = await fetch(
       `https://api.abcz.workers.dev/api/bazardor/products/${ID}`,
-      { next: { revalidate: 3600 } }
+      { next: { revalidate: 3600 } },
     );
     if (response.ok) {
       data = await response.json();
@@ -84,8 +86,8 @@ const page = async ({ params }: PageProps) => {
 
   // Calculate price direction & differences
   const diffAmount = Math.abs((data.today || 0) - (data.yesterday || 0));
-  const isUp = data.change?.dir === "up" || (data.today > data.yesterday);
-  const isDown = data.change?.dir === "down" || (data.today < data.yesterday);
+  const isUp = data.change?.dir === "up" || data.today > data.yesterday;
+  const isDown = data.change?.dir === "down" || data.today < data.yesterday;
 
   // Summary Prices (min, max, avg) with fallback calculations if omitted by API
   const minPrice =
@@ -109,10 +111,14 @@ const page = async ({ params }: PageProps) => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-      
+      <p className=" flex gap-2 text-gray-600">
+        <Link href="/">হোম</Link> →{" "}
+        <Link href={`/Category/${data.category}`}>{data.categoryNameBn}</Link> →{" "}
+        <Link href={`/details/${data.id}`}>{data.nameBn}</Link>
+      </p>
+
       {/* 1. Top Product Header Card */}
       <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
-        
         {/* Left Side: Icon, Title, Subtitle & Price Change Statement */}
         <div className="flex items-start gap-4">
           <div className="w-16 h-16 bg-red-50/80 rounded-2xl flex items-center justify-center text-3xl shrink-0">
@@ -127,7 +133,15 @@ const page = async ({ params }: PageProps) => {
             </p>
             <p className="text-sm text-gray-600 mt-2 font-medium">
               গতকালকের তুলনায় আজ দাম{" "}
-              <span className={isUp ? "font-bold text-red-500" : isDown ? "font-bold text-emerald-600" : "font-bold text-gray-700"}>
+              <span
+                className={
+                  isUp
+                    ? "font-bold text-red-500"
+                    : isDown
+                      ? "font-bold text-emerald-600"
+                      : "font-bold text-gray-700"
+                }
+              >
                 {isUp ? "বেড়েছে" : isDown ? "কমেছে" : "পরিবর্তন হয়নি"}
               </span>
               {diffAmount > 0 && ` • ${toBn(diffAmount)} টাকা`}
@@ -150,8 +164,8 @@ const page = async ({ params }: PageProps) => {
                 isUp
                   ? "bg-red-50 text-red-600"
                   : isDown
-                  ? "bg-emerald-50 text-emerald-600"
-                  : "bg-gray-100 text-gray-600"
+                    ? "bg-emerald-50 text-emerald-600"
+                    : "bg-gray-100 text-gray-600"
               }`}
             >
               <span>{isUp ? "▲" : isDown ? "▼" : "—"}</span>
@@ -163,13 +177,11 @@ const page = async ({ params }: PageProps) => {
 
       {/* 2. Main Details Card (Summary & Market Table) */}
       <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-xs space-y-8">
-        
         {/* Section 1: Price Summary (দামের সারসংক্ষেপ) */}
         <div className="space-y-4">
           <h2 className="text-xl font-bold text-gray-900">দামের সারসংক্ষেপ</h2>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            
             {/* Minimum Price */}
             <div className="bg-gray-50/60 border border-gray-100 rounded-2xl p-5 space-y-1">
               <span className="text-xs text-gray-500 font-medium block">
@@ -208,7 +220,6 @@ const page = async ({ params }: PageProps) => {
                 প্রতি {getUnitBn(data.unit)}-এর হিসাবে
               </span>
             </div>
-
           </div>
         </div>
 
@@ -238,9 +249,7 @@ const page = async ({ params }: PageProps) => {
                     <td className="py-4 px-4 font-semibold text-gray-900">
                       {item.market}
                     </td>
-                    <td className="py-4 px-4 text-gray-600">
-                      {item.division}
-                    </td>
+                    <td className="py-4 px-4 text-gray-600">{item.division}</td>
                     <td className="py-4 px-4 text-gray-700">
                       {toBn(item.min)} টাকা
                     </td>
@@ -248,7 +257,7 @@ const page = async ({ params }: PageProps) => {
                       {toBn(item.max)} টাকা
                     </td>
                     <td className="py-4 px-4 font-bold text-gray-900">
-                      {toBn((item.min+item.max)/2)} টাকা
+                      {toBn((item.min + item.max) / 2)} টাকা
                     </td>
                   </tr>
                 ))}
@@ -256,9 +265,7 @@ const page = async ({ params }: PageProps) => {
             </table>
           </div>
         </div>
-
       </div>
-
     </div>
   );
 };
