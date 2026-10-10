@@ -1,17 +1,11 @@
 import ProductPage from "@/app/products/page";
 import ProductCard, { Product } from "../Cards/ProductCard";
 
-// // Helper to convert numbers to Bengali
-// const toBn = (num: number | string): string => {
-//   return num
-//     .toString()
-//     .replace(/\d/g, (digit) => "০১২৩৪৫৬৭৮৯"[parseInt(digit, 10)]);
-// };
 
 const getProductData = async (): Promise<Product[]> => {
   try {
     const res = await fetch(
-      "https://api.api-store.workers.dev/api/bazardor/products" ,
+      "https://openapi.programming-hero.com/api/bazardor/products" ,
       { next: { revalidate: 3600 } }
     );
     if (!res.ok) return [];

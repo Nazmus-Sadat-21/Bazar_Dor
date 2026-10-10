@@ -14,7 +14,7 @@ const page = async ({ params }: PageProps) => {
   let data:[] = []
    try {
     const response = await fetch(
-      `https://api.abcz.workers.dev/api/bazardor/products?category=${CategoryID}`, { next: { revalidate: 3600 } }
+      `https://openapi.programming-hero.com/api/bazardor/products?category=${CategoryID}`, { next: { revalidate: 3600 } }
     );
     if (response.ok) {
       data = await response.json();

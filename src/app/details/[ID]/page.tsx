@@ -59,7 +59,7 @@ const page = async ({ params }: PageProps) => {
 
   try {
     const response = await fetch(
-      `https://api.api-store.workers.dev/api/bazardor/products/${ID}`, { next: { revalidate: 3600 } }
+      `https://openapi.programming-hero.com/api/bazardor/products/${ID}`, { next: { revalidate: 3600 } }
     );
     if (response.ok) {
       data = await response.json();

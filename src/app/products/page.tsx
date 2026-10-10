@@ -9,7 +9,7 @@ const toBn = (num: number | string): string => {
 const getProductData = async (): Promise<Product[]> => {
   try {
     const res = await fetch(
-      "https://api.api-store.workers.dev/api/bazardor/products",
+      "https://openapi.programming-hero.com/api/bazardor/products",
       { next: { revalidate: 3600 } },
     );
     if (!res.ok) return [];
