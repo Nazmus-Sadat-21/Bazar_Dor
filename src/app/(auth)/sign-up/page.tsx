@@ -20,8 +20,11 @@ export default function SignUpPage() {
       password: string;
       repassword: string;
     };
+    if(user.password.length < 8 ){
+      return toast.error("Please enter atleast 8 character")
+    }
     if (user.password != user.repassword) {
-      return toast.error("Please Check your password again!");
+      return toast.error("Please Check your re-password again!");
     }
 
     const { data, error } = await signUp.email({
