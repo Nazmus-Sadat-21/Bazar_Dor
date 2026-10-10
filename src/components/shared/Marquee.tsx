@@ -42,15 +42,16 @@ const Marquee = async () => {
   let data: ProductDetails[] = [];
 
   try {
-    const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products" , { next: { revalidate: 3600 } });
+    const res = await fetch(
+      "https://api.abcz.workers.dev/api/bazardor/products",
+      { next: { revalidate: 3600 } },
+    );
     if (!res.ok) return [];
     data = (await res.json()) as ProductDetails[];
   } catch (error) {
     console.log(error);
     return [];
   }
-
-  
 
   return (
     <div className="w-full bg-white border-y border-gray-100 py-2.5 shadow-2xs overflow-hidden">
@@ -67,12 +68,14 @@ const Marquee = async () => {
                 className="inline-flex items-center gap-2.5 px-3.5 py-1.5 bg-gray-50/80 hover:bg-emerald-50/60 border border-gray-100 hover:border-emerald-200 rounded-full transition-all text-sm shrink-0 whitespace-nowrap cursor-pointer group"
               >
                 {/* Category Icon */}
-                {e.categoryIcon && (
+                {/* {e.categoryIcon && (
                   <span className="text-base group-hover:scale-110 transition-transform">
                     {e.categoryIcon}
                   </span>
-                )}
-
+                )} */}
+                <span className="text-base group-hover:scale-110 transition-transform">
+                  {e.image}
+                </span>
                 {/* Product Name */}
                 <span className="font-bold text-gray-800 group-hover:text-[#008a4c] transition-colors">
                   {e.nameBn}
@@ -80,7 +83,7 @@ const Marquee = async () => {
 
                 {/* Price & Unit */}
                 <span className="font-semibold text-gray-900 ">
-                  ৳{toBn(e.today)} 
+                  ৳{toBn(e.today)}
                   <span className="text-xs font-normal text-gray-500 ml-0.5">
                     টাকা/{getUnitBn(e.unit)}
                   </span>
