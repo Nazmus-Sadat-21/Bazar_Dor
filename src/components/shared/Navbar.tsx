@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ShoppingCart, Menu, X, User, LogOut } from "lucide-react";
 import { signOut, useSession } from "@/lib/auth-client";
+import { toast } from "react-toastify";
 
 export default function Navbar() {
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function Navbar() {
     setIsMobileMenuOpen(false);
     await signOut();
     router.push("/");
+    toast.success("SignOut Successfully")
   };
 
   const [date, setDate] = useState<string>("");

@@ -13,6 +13,7 @@ export default function ProfilePage() {
   const handleSignout = async () => {
     await signOut();
     router.push("/");
+    toast.success("SignOut Successfully")
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
